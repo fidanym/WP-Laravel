@@ -1,7 +1,7 @@
 @extends ('layouts.master')
 
 @section('content')
-    <div class="col-sm-8">
+    <div class="col-md-8">
         <h1>Create a Post</h1>
         <hr>
 

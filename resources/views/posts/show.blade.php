@@ -14,30 +14,33 @@
             <ul class="list-group">
                 @foreach ($post->comments as $comment)
                     <li class="list-group-item">
-                        <strong>
-                            {{ $comment->created_at->diffForHumans() }}: &nbsp;
-                        </strong>
+                        <span class="badge badge-light">
+                            {{ $comment->created_at->diffForHumans() }}
+                        </span>
+                        <strong>{{ auth()->user()->name }}:</strong>
                         {{ $comment->body }}
                     </li>
                 @endforeach
             </ul>
         </div>
 
-        <div class="card">
-            <div class="card-body">
-                <form method="POST" action="/posts/{{ $post->id }}/comments">
-                    {{ csrf_field() }}
-                    <div class="form-group">
-                        <textarea name="body" placeholder="Your comment here." class="form-control"></textarea>
-                    </div>
+        @if (auth()->check())
+            <div class="card">
+                <div class="card-body">
+                    <form method="POST" action="/posts/{{ $post->id }}/comments">
+                        {{ csrf_field() }}
+                        <div class="form-group">
+                            <textarea name="body" placeholder="Your comment here." class="form-control"></textarea>
+                        </div>
 
-                    <div class="form-group">
-                        <button type="submit" class="btn btn-primary">Add Comment</button>
-                    </div>
-                </form>
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-primary">Add Comment</button>
+                        </div>
+                    </form>
 
-                @include ('layouts.errors')
+                    @include ('layouts.errors')
+                </div>
             </div>
-        </div>
+        @endif
     </div>
 @endsection

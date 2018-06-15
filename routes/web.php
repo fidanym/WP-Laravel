@@ -13,6 +13,7 @@ Route::post('/posts/{post}/update', 'PostsController@update');
 
 Route::post('/posts/{post}/comments', 'CommentsController@store');
 Route::get('/posts/{post}/comments', 'CommentsController@index');
+Route::delete('/comments/{comment}', 'CommentsController@destroy');
 
 Route::get('/register', 'RegistrationController@create');
 Route::post('/register', 'RegistrationController@store');

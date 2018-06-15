@@ -16,7 +16,7 @@ class PostsController extends Controller
     public function index() {
         $posts = Post::latest()
             ->filter(request(['month', 'year']))
-            ->get();
+            ->simplePaginate(5);
 
         return view('posts.index', compact('posts', 'archives'));
     }
@@ -56,7 +56,7 @@ class PostsController extends Controller
         $data['id'] = $id;
         $p->updatePost($data);
 
-        return back();
+        return redirect('/posts/'.$id);
     }
 
     public function destroy(Post $post) {

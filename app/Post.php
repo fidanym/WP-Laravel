@@ -43,4 +43,14 @@ class Post extends Model
             ->get()
             ->toArray();
     }
+
+    public function updatePost($data) {
+        $post = $this->find($data['id']);
+        $post->user_id = auth()->user()->id;
+        $post->title = $data['title'];
+        $post->body = $data['body'];
+        $post->save();
+        return 1;
+    }
+
 }

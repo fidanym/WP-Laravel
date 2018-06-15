@@ -10,6 +10,10 @@ use App\Comment;
 class CommentsController extends Controller
 {
 
+    public function index(Post $post){
+        return $post->comments->toJson();
+    }
+
     public function store(Post $post){
         $this->validate(request(), ['body' => 'required|min:2']);
         $post->addComment(request('body'));

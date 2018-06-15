@@ -4,7 +4,7 @@
 
     <div class="col-md-8 blog-main">
         <h3 class="pb-3 mb-4 font-italic border-bottom">
-            Latest Posts
+            Latest Posts by {{ $user->name }}
         </h3>
 
         @foreach ($posts as $post)

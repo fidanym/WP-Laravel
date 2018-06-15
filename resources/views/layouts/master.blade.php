@@ -16,6 +16,7 @@
     <!-- Custom styles for this template -->
     <link href="https://fonts.googleapis.com/css?family=Playfair+Display:700,900" rel="stylesheet">
     <link href="/css/blog.css" rel="stylesheet">
+    <script src="{{ URL::asset('js/app.js') }}"></script>
 </head>
 
 <body>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Post;
+use App\User;
 
 class PostsController extends Controller
 {
@@ -40,5 +41,33 @@ class PostsController extends Controller
         );
 
         return redirect('/');
+    }
+
+    public function edit(Post $post) {
+        return view('posts.edit', compact('post'));
+    }
+
+    public function update(Request $request, $id) {
+        $p = new Post();
+        $data = $this->validate($request, [
+           'title' => 'required|min:2',
+            'body' => 'required|min:5'
+        ]);
+        $data['id'] = $id;
+        $p->updatePost($data);
+
+        return back();
+    }
+
+    public function destroy(Post $post) {
+        $post->delete();
+
+        return redirect('/users/'.$post->user->id);
+    }
+
+    public function userPosts(User $user) {
+        $posts = $user->posts;
+
+        return view('posts.user', compact('posts', 'archives', 'user'));
     }
 }

@@ -12,6 +12,7 @@
 <script src="../../assets/js/vendor/popper.min.js"></script>
 <script src="../../dist/js/bootstrap.min.js"></script>
 <script src="../../assets/js/vendor/holder.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.9/summernote-lite.js"></script>
 <script>
     Holder.addTheme('thumb', {
         bg: '#55595c',
@@ -19,3 +20,4 @@
         text: 'Thumbnail'
     });
 </script>
+

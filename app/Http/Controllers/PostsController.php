@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Post;
 use App\User;
+use Illuminate\Support\Facades\File;
 
 class PostsController extends Controller
 {
@@ -36,8 +37,33 @@ class PostsController extends Controller
             'body' => 'required'
         ]);
 
+        $body = request('body');
+
+        $dom = new \domdocument();
+        $dom->loadHTML($body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+
+        foreach ($images as $k => $img){
+            $data = $img->getattribute('src');
+            list($type, $data) = explode(';', $data);
+            list(,$data) = explode(',', $data);
+
+            $data = base64_decode($data);
+            $image_name = time().$k.'.png';
+            $path = public_path().'/images/'.$image_name;
+
+            file_put_contents($path, $data);
+
+            $img->removeattribute('src');
+            $img->setattribute('src', asset('images/'.$image_name));
+        }
+
+        $body = $dom->savehtml();
+        $data = array();
+        $data['title'] = request('title');
+        $data['body'] = $body;
         auth()->user()->publish(
-            new Post(request(['title', 'body']))
+            new Post($data)
         );
 
         return redirect('/');
@@ -60,6 +86,17 @@ class PostsController extends Controller
     }
 
     public function destroy(Post $post) {
+        $dom = new \domdocument();
+        $dom->loadHTML($post->body, LIBXML_HTML_NOIMPLIED | LIBXML_HTML_NODEFDTD);
+        $images = $dom->getElementsByTagName('img');
+        foreach ($images as $k => $img){
+            $image_name = basename($img->getattribute('src'));
+
+            if(file_exists(public_path().'/images/'.$image_name)) {
+                File::delete(public_path().'/images/'.$image_name);
+            }
+        }
+
         $post->delete();
 
         return redirect('/users/'.$post->user->id);

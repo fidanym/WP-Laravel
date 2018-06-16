@@ -15,7 +15,7 @@
 
             <div class="form-group">
                 <label for="body">Body:</label>
-                <textarea name="body" id="body" class="form-control" rows="12"></textarea>
+                <textarea name="body" id="body" class="summernote form-control" rows="12"></textarea>
             </div>
 
             <div class="form-group">
@@ -24,6 +24,15 @@
 
             @include('layouts.errors')
         </form>
+
+        <script>
+            $(document).ready(function() {
+                $('.summernote').summernote({
+                    tabsize: 2,
+                    height: 300
+                });
+            });
+        </script>
 
     </div>
 @endsection

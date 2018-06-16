@@ -6,7 +6,8 @@
             {{ $post->title }}
         </h1>
 
-        {{ $post->body }}
+        {!! $post->body !!}
+
         <div class="row mt-4">
             <div class="col-md-8">
                 <h5>Author: <a href="/users/{{$post->user->id}}">{{ $post->user->name }}</a> <small>on {{ $post->created_at->toDayDateTimeString() }}</small></h5>
